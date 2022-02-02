@@ -19,17 +19,17 @@ jobs:
         fetch-depth: 0 #fetch-depth is needed for GitVersion
         
     #Install and calculate the new version with GitVersion  
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.9.7
-      with:
-        versionSpec: 5.x
-    - name: Determine Version
-      uses: gittools/actions/gitversion/execute@v0.9.7
-      id: gitversion # step id used as reference for output values
-    - name: Display GitVersion outputs
-      run: |
-        echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
-        echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
+#     - name: Install GitVersion
+#       uses: gittools/actions/gitversion/setup@v0.9.7
+#       with:
+#         versionSpec: 5.x
+#     - name: Determine Version
+#       uses: gittools/actions/gitversion/execute@v0.9.7
+#       id: gitversion # step id used as reference for output values
+#     - name: Display GitVersion outputs
+#       run: |
+#         echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
+#         echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
     
     #Build/pack the project
     - name: Setup .NET
@@ -70,11 +70,11 @@ jobs:
       with:
         tag_name: ${{ needs.build.outputs.Version }}
         release_name: Release ${{ needs.build.outputs.Version }}
-    - name: Create Release
-      if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change
-      uses: ncipollo/release-action@v1
-      with:
-        tag: ${{ needs.build.outputs.Version }}
-        name: Release ${{ needs.build.outputs.Version }}
-        artifacts: "nugetPackage/*"
-        token: ${{ secrets.GITHUB_TOKEN }}
+#     - name: Create Release
+#       if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change
+#       uses: ncipollo/release-action@v1
+#       with:
+#         tag: ${{ needs.build.outputs.Version }}
+#         name: Release ${{ needs.build.outputs.Version }}
+#         artifacts: "nugetPackage/*"
+#         token: ${{ secrets.GITHUB_TOKEN }}
